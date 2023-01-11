@@ -1,4 +1,4 @@
-window.addEventListener("keydown", (e) => {
+function playSound(e) {
   // keyCode is deprecated, but the starter files were created
   // based on keyCode, so I'm keeping it here.
   const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
@@ -11,14 +11,16 @@ window.addEventListener("keydown", (e) => {
   audio.currentTime = 0;
   audio.play();
   key.classList.add("playing");
-});
+}
+
+function deactivateKey(e) {
+  if (e.propertyName !== "transform") {
+    return;
+  }
+  this.classList.remove("playing");
+}
+
+window.addEventListener("keydown", playSound);
 
 const keys = document.querySelectorAll(".key");
-keys.forEach((key) =>
-  key.addEventListener("transitionend", (e) => {
-    if (e.propertyName !== "transform") {
-      return;
-    }
-    key.classList.remove("playing");
-  })
-);
+keys.forEach((key) => key.addEventListener("transitionend", deactivateKey));
