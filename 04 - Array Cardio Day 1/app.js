@@ -62,25 +62,67 @@ const people = [
   "Biondo, Frank",
 ];
 
+// Helper functions for solution
+function getInventorLifespan(inventor) {
+  return inventor.passed - inventor.year;
+}
+
+function lastNameComparer(a, b) {
+  const aLastName = a.split(",")[0].trim().toUpperCase();
+  const bLastName = b.split(",")[0].trim().toUpperCase();
+
+  if (aLastName > bLastName) {
+    return 1;
+  }
+  if (aLastName < bLastName) {
+    return -1;
+  }
+  return 0;
+}
+
 // Array.prototype.filter()
 // 1. Filter the list of inventors for those who were born in the 1500's
+const inventorsBornIn1500 = inventors.filter(
+  (inventor) => inventor.year >= 1500 && inventor.year < 1600
+);
+console.table(inventorsBornIn1500);
 
 // Array.prototype.map()
 // 2. Give us an array of the inventors first and last names
+const inventorFullNames = inventors.map(
+  (inventor) => `${inventor.first} ${inventor.last}`
+);
+console.log(inventorFullNames);
 
 // Array.prototype.sort()
 // 3. Sort the inventors by birthdate, oldest to youngest
+inventors.sort((a, b) => a.year - b.year);
+console.table(inventors);
 
 // Array.prototype.reduce()
 // 4. How many years did all the inventors live all together?
+const totalInventorLifespan = inventors.reduce(
+  (total, inventor) => total + getInventorLifespan(inventor),
+  0
+);
+console.log({ totalInventorLifespan });
 
 // 5. Sort the inventors by years lived
+inventors.sort((a, b) => getInventorLifespan(a) - getInventorLifespan(b));
+console.table(inventors);
 
 // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
 // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+// This snippet needs to be run in the console of the above link.
+const boulevardsWithDe = Array.from(document.querySelectorAll(".mw-category a"))
+  .map((link) => link.innerText)
+  .filter((link) => link.includes("de"));
+console.log({ boulevardsWithDe });
 
 // 7. sort Exercise
 // Sort the people alphabetically by last name
+people.sort(lastNameComparer);
+console.log(people);
 
 // 8. Reduce Exercise
 // Sum up the instances of each of these
@@ -100,3 +142,12 @@ const data = [
   "car",
   "truck",
 ];
+
+const dataCounts = data.reduce((counts, current) => {
+  if (!counts.hasOwnProperty(current)) {
+    counts[current] = 0;
+  }
+  counts[current]++;
+  return counts;
+}, {});
+console.log({ dataCounts });
