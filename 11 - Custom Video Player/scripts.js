@@ -12,11 +12,13 @@ const skipButtons = document.querySelectorAll(".player__button[data-skip]");
 function togglePlay() {
   if (video.paused || video.ended) {
     video.play();
-    playPause.innerText = "⏸";
   } else {
     video.pause();
-    playPause.innerHTML = "►";
   }
+}
+
+function updatePlayPauseButton() {
+  playPause.innerText = video.paused || video.ended ? "►" : "⏸";
 }
 
 function updateVolume() {
@@ -42,6 +44,9 @@ if (supportsVideo) {
   controlsContainer.style.display = "flex";
 
   playPause.addEventListener("click", togglePlay);
+  video.addEventListener("click", togglePlay);
+  video.addEventListener("play", updatePlayPauseButton);
+  video.addEventListener("pause", updatePlayPauseButton);
   volume.addEventListener("input", updateVolume);
   skipButtons.forEach((skipButton) => {
     skipButton.addEventListener("click", skip);
