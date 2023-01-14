@@ -8,7 +8,7 @@ function checkShiftButton(e) {
 }
 
 function onCheckboxChange() {
-  if (isShiftDown && lastCheckboxChecked) {
+  if (this.checked && isShiftDown && lastCheckboxChecked) {
     checkAllInBetween(this, lastCheckboxChecked);
   }
   // If we checked the current checkbox then set it as the last one checked.
