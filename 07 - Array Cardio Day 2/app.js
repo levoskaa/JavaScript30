@@ -15,14 +15,30 @@ const comments = [
   { text: "Nice Nice Nice!", id: 542328 },
 ];
 
+// Helper functions for my solutions.
+function isOlder(person, age) {
+  const currentYear = new Date().getFullYear();
+  return currentYear - person.year >= age;
+}
+
 // Some and Every Checks
 // Array.prototype.some() // is at least one person 19 or older?
 // Array.prototype.every() // is everyone 19 or older?
+const containsAdult = people.some((person) => isOlder(person, 19));
+console.log({ containsAdult });
+
+const areAllAdults = people.every((person) => isOlder(person, 19));
+console.log({ areAllAdults });
 
 // Array.prototype.find()
 // Find is like filter, but instead returns just the one you are looking for
 // find the comment with the ID of 823423
+const comment = comments.find((comment) => comment.id === 823423);
+console.log({ comment });
 
 // Array.prototype.findIndex()
 // Find the comment with this ID
 // delete the comment with the ID of 823423
+const index = comments.findIndex((comment) => comment.id === 823423);
+comments.splice(index, 1);
+console.table(comments);
