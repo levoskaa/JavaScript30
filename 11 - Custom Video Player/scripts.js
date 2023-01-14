@@ -18,6 +18,10 @@ function togglePlay() {
   }
 }
 
+function updateVolume() {
+  video.volume = this.value;
+}
+
 // Determine if browser supports the video element.
 const supportsVideo = !!document.createElement("video").canPlayType;
 
@@ -28,4 +32,5 @@ if (supportsVideo) {
   controls.style.display = "flex";
 
   playPause.addEventListener("click", togglePlay);
+  volume.addEventListener("input", updateVolume);
 }
