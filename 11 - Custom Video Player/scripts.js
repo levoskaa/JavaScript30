@@ -1,5 +1,5 @@
 const video = document.querySelector("video.viewer");
-const controls = document.querySelector(".player__controls");
+const controlsContainer = document.querySelector(".player__controls");
 const playPause = document.querySelector(".player__button.toggle");
 const volume = document.querySelector(".player__slider[name=volume]");
 const progress = document.querySelector(".progress");
@@ -35,7 +35,7 @@ if (supportsVideo) {
   // Hide the default controls.
   video.controls = false;
   // Display the custom video controls.
-  controls.style.display = "flex";
+  controlsContainer.style.display = "flex";
 
   playPause.addEventListener("click", togglePlay);
   volume.addEventListener("input", updateVolume);
