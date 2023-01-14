@@ -3,19 +3,20 @@ const ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-ctx.strokeStyle = "#BADA55";
 ctx.lineJoin = "round";
 ctx.lineCap = "round";
 
 let isDrawing = false;
 let lastX = 0;
 let lastY = 0;
+let hue = 0;
 
 function draw(e) {
   if (!isDrawing) {
     return;
   }
 
+  ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
   ctx.beginPath();
   // Begin line here.
   ctx.moveTo(lastX, lastY);
@@ -25,6 +26,7 @@ function draw(e) {
 
   lastX = e.offsetX;
   lastY = e.offsetY;
+  hue++;
 }
 
 canvas.addEventListener("mousedown", (e) => {
