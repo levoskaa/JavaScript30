@@ -7,6 +7,7 @@ const progressBar = document.querySelector(".progress__filled");
 const playbackRate = document.querySelector(
   ".player__slider[name=playbackRate]"
 );
+const skipButtons = document.querySelectorAll(".player__button[data-skip]");
 
 function togglePlay() {
   if (video.paused || video.ended) {
@@ -22,6 +23,11 @@ function updateVolume() {
   video.volume = this.value;
 }
 
+function skip() {
+  const skipAmount = Number(this.dataset.skip);
+  video.currentTime += skipAmount;
+}
+
 // Determine if browser supports the video element.
 const supportsVideo = !!document.createElement("video").canPlayType;
 
@@ -33,4 +39,7 @@ if (supportsVideo) {
 
   playPause.addEventListener("click", togglePlay);
   volume.addEventListener("input", updateVolume);
+  skipButtons.forEach((skipButton) => {
+    skipButton.addEventListener("click", skip);
+  });
 }
