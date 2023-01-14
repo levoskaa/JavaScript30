@@ -28,6 +28,10 @@ function skip() {
   video.currentTime += skipAmount;
 }
 
+function updatePlaybackRate() {
+  video.playbackRate = this.value;
+}
+
 // Determine if browser supports the video element.
 const supportsVideo = !!document.createElement("video").canPlayType;
 
@@ -42,4 +46,5 @@ if (supportsVideo) {
   skipButtons.forEach((skipButton) => {
     skipButton.addEventListener("click", skip);
   });
+  playbackRate.addEventListener("input", updatePlaybackRate);
 }
