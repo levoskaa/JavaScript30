@@ -2,7 +2,6 @@ const video = document.querySelector("video.viewer");
 const controlsContainer = document.querySelector(".player__controls");
 const playPause = document.querySelector(".player__button.toggle");
 const volume = document.querySelector(".player__slider[name=volume]");
-const progress = document.querySelector(".progress");
 const progressBar = document.querySelector(".progress__filled");
 const playbackRate = document.querySelector(
   ".player__slider[name=playbackRate]"
@@ -34,6 +33,11 @@ function updatePlaybackRate() {
   video.playbackRate = this.value;
 }
 
+function updateProgress() {
+  const progressPercent = (video.currentTime / video.duration) * 100;
+  progressBar.style.flexBasis = progressPercent + "%";
+}
+
 // Determine if browser supports the video element.
 const supportsVideo = !!document.createElement("video").canPlayType;
 
@@ -52,4 +56,5 @@ if (supportsVideo) {
     skipButton.addEventListener("click", skip);
   });
   playbackRate.addEventListener("input", updatePlaybackRate);
+  video.addEventListener("timeupdate", updateProgress);
 }
