@@ -17,7 +17,7 @@ function togglePlay() {
 }
 
 function updatePlayPauseButton() {
-  playPause.innerText = video.paused || video.ended ? "►" : "⏸";
+  playPause.innerText = video.paused || video.ended ? "►" : "❚❚";
 }
 
 function updateVolume() {
