@@ -1,3 +1,4 @@
+const player = document.querySelector(".player");
 const video = document.querySelector("video.viewer");
 const controlsContainer = document.querySelector(".player__controls");
 const playPause = document.querySelector(".player__button.toggle");
@@ -8,6 +9,7 @@ const playbackRate = document.querySelector(
   ".player__slider[name=playbackRate]"
 );
 const skipButtons = document.querySelectorAll(".player__button[data-skip]");
+const fullscreenButton = document.querySelector(".player__button.full-screen");
 
 function togglePlay() {
   if (video.paused || video.ended) {
@@ -54,6 +56,26 @@ function doScrub(e) {
   video.currentTime = video.duration * position;
 }
 
+function toggleFullscreen() {
+  if (document.fullscreenElement !== null) {
+    // The document is in fullscreen mode.
+    document.exitFullscreen();
+    setFullscreenData(false);
+  } else {
+    // The document is not in fullscreen mode.
+    player.requestFullscreen();
+    setFullscreenData(true);
+  }
+}
+
+function onFullscreenChange() {
+  setFullscreenData(!!document.fullscreenElement);
+}
+
+function setFullscreenData(state) {
+  player.setAttribute("data-fullscreen", state);
+}
+
 // Determine if browser supports the video element.
 const supportsVideo = !!document.createElement("video").canPlayType;
 
@@ -75,4 +97,11 @@ if (supportsVideo) {
   video.addEventListener("timeupdate", updateProgress);
   progress.addEventListener("click", scrub);
   progress.addEventListener("mousemove", scrub);
+  fullscreenButton.addEventListener("click", toggleFullscreen);
+  document.addEventListener("fullscreenchange", onFullscreenChange);
+}
+
+const supportsFullscreen = document.fullscreenEnabled;
+if (!supportsFullscreen) {
+  fullscreenButton.style.display = "none";
 }

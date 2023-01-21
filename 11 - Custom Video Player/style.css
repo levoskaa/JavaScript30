@@ -60,6 +60,11 @@ body {
   border-color: #ffc600;
 }
 
+.player__button.full-screen {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
 .player__slider {
   width: 10px;
   height: 30px;
@@ -104,6 +109,13 @@ body {
   background: #ffc600;
   flex: 0;
   flex-basis: 50%;
+}
+
+/* full screen styles */
+.player[data-fullscreen="true"] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* unholy css to style input type="range" */
