@@ -11,6 +11,8 @@ const playbackRate = document.querySelector(
 const skipButtons = document.querySelectorAll(".player__button[data-skip]");
 const fullscreenButton = document.querySelector(".player__button.full-screen");
 
+let inactiveTimeoutId;
+
 function togglePlay() {
   if (video.paused || video.ended) {
     video.play();
@@ -69,11 +71,38 @@ function toggleFullscreen() {
 }
 
 function onFullscreenChange() {
-  setFullscreenData(!!document.fullscreenElement);
+  const isFullscreen = !!document.fullscreenElement;
+  setFullscreenData(isFullscreen);
+  if (isFullscreen) {
+    inactiveTimeoutId = setFullscreenTimeout();
+  } else {
+    clearTimeout(inactiveTimeoutId);
+    inactiveTimeoutId = undefined;
+  }
 }
 
 function setFullscreenData(state) {
   player.setAttribute("data-fullscreen", state);
+}
+
+function onPlayerMousemove() {
+  if (inactiveTimeoutId) {
+    clearFullscreenTimeout();
+  }
+  inactiveTimeoutId = setFullscreenTimeout();
+}
+
+function setFullscreenTimeout() {
+  return setTimeout(() => {
+    player.style.cursor = "none";
+    controlsContainer.classList.add("inactive");
+  }, 2000);
+}
+
+function clearFullscreenTimeout() {
+  clearTimeout(inactiveTimeoutId);
+  player.style.cursor = "auto";
+  controlsContainer.classList.remove("inactive");
 }
 
 // Determine if browser supports the video element.
@@ -99,6 +128,11 @@ if (supportsVideo) {
   progress.addEventListener("mousemove", scrub);
   fullscreenButton.addEventListener("click", toggleFullscreen);
   document.addEventListener("fullscreenchange", onFullscreenChange);
+  player.addEventListener("mousemove", () => {
+    if (document.fullscreenElement) {
+      onPlayerMousemove();
+    }
+  });
 }
 
 const supportsFullscreen = document.fullscreenEnabled;

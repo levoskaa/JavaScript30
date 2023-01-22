@@ -112,10 +112,14 @@ body {
 }
 
 /* full screen styles */
-.player[data-fullscreen="true"] {
+.player:fullscreen {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.player .player__controls.inactive {
+  transform: translateY(100%) translateY(-5px);
 }
 
 /* unholy css to style input type="range" */
