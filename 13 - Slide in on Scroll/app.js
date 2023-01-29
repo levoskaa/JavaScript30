@@ -1,3 +1,5 @@
+const slidingImages = document.querySelectorAll("img.slide-in");
+
 function debounce(func, wait = 20, immediate = true) {
   var timeout;
   return function () {
@@ -13,3 +15,20 @@ function debounce(func, wait = 20, immediate = true) {
     if (callNow) func.apply(context, args);
   };
 }
+
+function checkSlide() {
+  for (const slidingImage of slidingImages) {
+    const imageBottom = slidingImage.offsetTop + slidingImage.height;
+    // Half way through the height of the image.
+    const slideInAt = slidingImage.offsetTop + slidingImage.height / 2;
+    const isHalfShown = slideInAt <= window.scrollY + window.innerHeight;
+    const isScrolledPast = imageBottom < window.scrollY;
+    if (isHalfShown && !isScrolledPast) {
+      slidingImage.classList.add("active");
+    } else {
+      slidingImage.classList.remove("active");
+    }
+  }
+}
+
+window.addEventListener("scroll", debounce(checkSlide));
