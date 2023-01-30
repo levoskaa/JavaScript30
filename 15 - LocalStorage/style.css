@@ -70,12 +70,22 @@ h2 {
   content: "🌮";
 }
 
-.add-items {
+.add-items,
+.manage-items {
   margin-top: 20px;
 }
 
-.add-items input {
+.manage-items {
+  display: flex;
+  gap: 10px;
+}
+
+:is(.add-items, .manage-items) input {
   padding: 10px;
   outline: 0;
   border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.manage-items > * {
+  flex: 1;
 }
