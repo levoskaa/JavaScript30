@@ -1,6 +1,9 @@
 const addItems = document.querySelector(".add-items");
 const itemsList = document.querySelector(".plates");
-const items = JSON.parse(localStorage.getItem("items")) || [];
+const manageItems = document.querySelector(".manage-items");
+const clearBtn = manageItems.querySelector("input[name=clear]");
+
+let items = JSON.parse(localStorage.getItem("items")) || [];
 
 function addItem(e) {
   // Prevent page from reloading on submit.
@@ -39,7 +42,14 @@ function displayList(items = [], destination) {
     .join("");
 }
 
+function clearItems() {
+  items = [];
+  displayList(items, itemsList);
+  localStorage.setItem("items", JSON.stringify(items));
+}
+
 addItems.addEventListener("submit", addItem);
 itemsList.addEventListener("click", toggleDone);
+clearBtn.addEventListener("click", clearItems);
 
 displayList(items, itemsList);
