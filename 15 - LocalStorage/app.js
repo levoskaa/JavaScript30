@@ -2,6 +2,7 @@ const addItems = document.querySelector(".add-items");
 const itemsList = document.querySelector(".plates");
 const manageItems = document.querySelector(".manage-items");
 const clearBtn = manageItems.querySelector("input[name=clear]");
+const checkBtn = manageItems.querySelector("input[name=check]");
 
 let items = JSON.parse(localStorage.getItem("items")) || [];
 
@@ -48,8 +49,15 @@ function clearItems() {
   localStorage.setItem("items", JSON.stringify(items));
 }
 
+function checkItems() {
+  items.forEach((item) => (item.done = true));
+  displayList(items, itemsList);
+  localStorage.setItem("items", JSON.stringify(items));
+}
+
 addItems.addEventListener("submit", addItem);
 itemsList.addEventListener("click", toggleDone);
 clearBtn.addEventListener("click", clearItems);
+checkBtn.addEventListener("click", checkItems);
 
 displayList(items, itemsList);
