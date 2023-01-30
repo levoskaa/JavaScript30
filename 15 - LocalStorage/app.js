@@ -15,8 +15,7 @@ function addItem(e) {
     done: false,
   };
   items.push(item);
-  displayList(items, itemsList);
-  localStorage.setItem("items", JSON.stringify(items));
+  updateItems();
   this.reset();
 }
 
@@ -45,12 +44,15 @@ function displayList(items = [], destination) {
 
 function clearItems() {
   items = [];
-  displayList(items, itemsList);
-  localStorage.setItem("items", JSON.stringify(items));
+  updateItems();
 }
 
 function checkItems() {
   items.forEach((item) => (item.done = true));
+  updateItems();
+}
+
+function updateItems() {
   displayList(items, itemsList);
   localStorage.setItem("items", JSON.stringify(items));
 }
